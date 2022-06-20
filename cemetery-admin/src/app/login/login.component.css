@@ -1,0 +1,37 @@
+.flex-login-main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 1em;
+    width: 50%;
+    padding: 1em;
+}
+
+.main-title {
+
+}
+
+.subtitle {
+    margin: 0px;
+    padding-bottom: 1em;
+}
+
+.login-button {
+    margin: 1em;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.username-field {
+    font-size: 1em;
+    padding: 0.5em;
+    margin: 1em;
+}
+
+.password-field {
+    font-size: 1em;
+    padding: 0.5em;
+    margin: 1em;
+}
