@@ -1,7 +1,10 @@
-<form class="flex-login-main-container" [formGroup]="loginFormFields" (ngSubmit)="logIn()">
-    <h1 class="main-title">{{title}}</h1>
-    <h2 class="subtitle">{{subTitle}}</h2>
-    <input class="username-field" placeholder="Nazwa użytkownika" formControlName="username">
-    <input class="password-field" type="password" placeholder="Podaj hasło" formControlName="password">
-    <button class="login-button" type="submit">Login</button>
-</form>
+<div class="flex-logn-main-container">
+    <form class="flex-login-form" [formGroup]="loginFormFields" (ngSubmit)="logIn()">
+        <h1 class="main-title">{{title}}</h1>
+        <h2 class="subtitle">{{subTitle}}</h2>
+        <input class="username-field" placeholder="Nazwa użytkownika" formControlName="username" required>
+        <input class="password-field" type="password" placeholder="Podaj hasło" formControlName="password" required>
+        <p class="error-message">{{errorMessage}}</p>
+        <button class="login-button" type="submit">Login</button>
+    </form>
+</div>

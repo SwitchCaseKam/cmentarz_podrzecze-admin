@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { AuthLoginService } from './auth-login.service';
 
 @Component({
   selector: 'app-login',
@@ -16,10 +17,13 @@ export class LoginComponent implements OnInit {
   protected subTitle = "Panel administratora";
   protected loginFormFields: FormGroup = new FormGroup({});
 
-  protected username = '';
-  protected password = '';
+  protected errorMessage = '';
 
-  constructor(private formBuilder: FormBuilder, private router: Router) { }
+  constructor(
+    private formBuilder: FormBuilder, 
+    private router: Router,
+    private authLoginService: AuthLoginService
+  ) { }
 
   public ngOnInit(): void {
     this.loginFormFields = this.createLoginFormField();
@@ -27,19 +31,23 @@ export class LoginComponent implements OnInit {
 
   private createLoginFormField(): FormGroup {
     return this.formBuilder.group({
-      username: ['', {validators: [Validators.required]}],
-      password: ['', {validators: [Validators.required]}]
+      username: ['', [Validators.required]
+      ],
+      password: ['', [Validators.required]
+      ]
     });
   }
 
   protected logIn(): void {
-    console.log('login clicked with data: ', this.loginFormFields.value);
-    if (this.loginFormFields.get('username')?.value === 'kamil' 
+    if (this.loginFormFields.get('username')?.value === 'admin' 
       && this.loginFormFields.get('password')?.value === 'admin' 
     ) {
-      console.log('username passed');
+      this.errorMessage = '';
+      this.authLoginService.setLoggedInFlag();
+      this.router.navigate(['edit-db']);
     } else {
-      console.log('wrong username or password')
+      this.errorMessage = "Nieprawidłowy login lub hasło";
+      this.authLoginService.resetLoggedInFlag();
     }
   }
 
