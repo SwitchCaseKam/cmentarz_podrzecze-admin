@@ -1,0 +1,19 @@
+<div class="flex-edit-single-record-main-container">
+    <h2>Wprowadź dane</h2>
+    <form class="flex-person-form" [formGroup]="personFormFields">
+        <input placeholder="imię" formControlName="name">
+        <input placeholder="nazwisko" formControlName="surname">
+        <input placeholder="data ur." formControlName="birthDate">
+        <input placeholder="data śmierci" formControlName="deathDate">
+        <input placeholder="numer nagrobka" formControlName="tombId">
+        <select placeholder="płeć" formControlName="sex">
+            <option>M</option>
+            <option>K</option>
+        </select>
+        <textarea placeholder="zdjęcia" formControlName="pictures"></textarea>
+    </form>
+    <div class="operations-buttons">
+        <button (click)="submitData()">OK</button>
+        <button>Anuluj</button>
+    </div>
+</div>

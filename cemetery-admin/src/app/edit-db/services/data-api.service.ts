@@ -34,6 +34,6 @@ export class DataApiService {
   public updateDbDate() {
     const date = new Date();
     const fullTodayDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;  
-    return this.http.post<DatabaseDate>(`${this.apiUrl}/${tombServerEndpoints.PEOPLE}`, {modifiedDate: fullTodayDate});
+    return this.http.put<DatabaseDate>(`${this.apiUrl}/${tombServerEndpoints.DATE}`, {modifiedDate: fullTodayDate});
   }
 }

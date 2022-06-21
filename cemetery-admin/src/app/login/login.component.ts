@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
   protected title = "Cmentarz w Podrzeczu";
   protected subTitle = "Panel administratora";
   protected loginFormFields: FormGroup = new FormGroup({});
-
   protected errorMessage = '';
 
   constructor(
