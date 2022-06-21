@@ -31,6 +31,10 @@ export class DataApiService {
     return this.http.post<Person>(`${this.apiUrl}/${tombServerEndpoints.PEOPLE}`, newPersonData);
   }
 
+  public editPerson(newPersonData: Person, personId: number) {
+    return this.http.put<Person>(`${this.apiUrl}/${tombServerEndpoints.PEOPLE}/${personId}`, newPersonData);
+  }
+
   public updateDbDate() {
     const date = new Date();
     const fullTodayDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;  

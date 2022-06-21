@@ -37,6 +37,8 @@ export class EditSingleRecordComponent implements OnInit {
     console.log('xxxx');
     console.log('submit data: ', this.personFormFields.value);
     const newPerson: Person = this.personFormFields.value;
+    newPerson.tombId = Number(newPerson.tombId);
+    newPerson.pictures = newPerson.pictures.toString() === '' ? [] : newPerson.pictures.toString().split(',');
     // newPerson.id = Math.floor(Math.random()*100+1000);
     this.dataApiService.updateDbDate().subscribe(d => console.log('datadb: ', d));
     this.dataApiService.addNewPerson(newPerson).subscribe(d => console.log('newPerson: ', d));
