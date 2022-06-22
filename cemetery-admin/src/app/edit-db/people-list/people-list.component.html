@@ -9,7 +9,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let person of allPeople; let i = index" (click)="onRowClick(person.id)">
+        <tr *ngFor="let person of allPeople; let i = index" (click)="onRowClick(person)">
           <td scope="row">{{ i + 1 }}</td>
           <td><b>{{ person.name }} {{ person.surname }}</b></td>
           <td>{{ person.birthDate }}</td>

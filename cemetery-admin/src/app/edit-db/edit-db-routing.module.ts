@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: '', component: EditDbComponent },
   { path: 'add', component: EditSingleRecordComponent },
   { path: 'edit', component: PeopleListComponent },
+  { path: 'edit/:id', component: EditSingleRecordComponent },
   { path: 'delete', component: EditSingleRecordComponent },
 ];
 

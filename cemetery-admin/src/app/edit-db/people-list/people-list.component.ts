@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { Person } from '../models/person.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-people-list',
@@ -11,7 +12,10 @@ export class PeopleListComponent implements OnInit {
 
   protected allPeople: Person[] = [];
 
-  constructor(private dataService: DataService) { }
+  constructor(
+    private dataService: DataService,
+    private router: Router,
+  ) { }
 
   public ngOnInit(): void {
     this.dataService.getDataFromServer();
@@ -20,8 +24,10 @@ export class PeopleListComponent implements OnInit {
     );
   }
 
-  public onRowClick(personId: number): void {
-    console.log('edit person with ID: ', personId);
+  public onRowClick(person: Person): void {
+    console.log('edit person: ', person);
+    this.router.navigate(['edit-db/edit', person.id]);
+
   }
 
 }
