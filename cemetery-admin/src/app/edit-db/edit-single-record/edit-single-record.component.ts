@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataApiService } from '../services/data-api.service';
-import { Person } from '../services/models/person.model';
+import { Person } from '../models/person.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-single-record',
@@ -14,7 +15,8 @@ export class EditSingleRecordComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private dataApiService: DataApiService
+    private dataApiService: DataApiService,
+    private router: Router
   ) { }
 
   public ngOnInit(): void {
@@ -34,14 +36,15 @@ export class EditSingleRecordComponent implements OnInit {
   }
 
   protected submitData(): void {
-    console.log('xxxx');
-    console.log('submit data: ', this.personFormFields.value);
     const newPerson: Person = this.personFormFields.value;
     newPerson.tombId = Number(newPerson.tombId);
     newPerson.pictures = newPerson.pictures.toString() === '' ? [] : newPerson.pictures.toString().split(',');
-    // newPerson.id = Math.floor(Math.random()*100+1000);
     this.dataApiService.updateDbDate().subscribe(d => console.log('datadb: ', d));
     this.dataApiService.addNewPerson(newPerson).subscribe(d => console.log('newPerson: ', d));
+  }
+
+  protected cancelEditData(): void {
+    this.router.navigate(['edit-db'])
   }
 
 }

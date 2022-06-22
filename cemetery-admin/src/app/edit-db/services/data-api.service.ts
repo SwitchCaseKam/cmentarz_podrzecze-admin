@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Person } from './models/person.model';
-import { DatabaseDate } from './models/databaseDate.model';
+import { Person } from '../models/person.model';
+import { DatabaseDate } from '../models/databaseDate.model';
 import { Observable } from 'rxjs';
 
 enum tombServerEndpoints {
