@@ -14,7 +14,7 @@ export class PeopleListComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private router: Router,
+    private router: Router
   ) { }
 
   public ngOnInit(): void {
@@ -25,9 +25,7 @@ export class PeopleListComponent implements OnInit {
   }
 
   public onRowClick(person: Person): void {
-    console.log('edit person: ', person);
-    this.router.navigate(['edit-db/edit', person.id]);
-
+    this.router.navigate(['edit-db/edit', person.id], {state: person});
   }
 
 }

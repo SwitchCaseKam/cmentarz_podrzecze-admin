@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataApiService } from '../services/data-api.service';
 import { Person } from '../models/person.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-single-record',
@@ -12,26 +12,49 @@ import { Router } from '@angular/router';
 export class EditSingleRecordComponent implements OnInit {
 
   protected personFormFields: FormGroup = new FormGroup({});
+  private personId: number = 0;
+  private person: Person = {id: 0, name: '', surname: '', birthDate: '', deathDate: '', sex: '', tombId: 0, pictures: []}
 
   constructor(
     private formBuilder: FormBuilder,
     private dataApiService: DataApiService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.person = this.router.getCurrentNavigation()?.extras.state as Person;
+  }
 
   public ngOnInit(): void {
-    this.personFormFields = this.createPersonFormFields();
+    this.activatedRoute.params.subscribe(p => {
+      if (p['id']) { this.personId = p['id']; }
+      this.personFormFields = this.createPersonFormFields();
+    });
   }
 
   private createPersonFormFields(): FormGroup {
+    if (!this.person) {
+      return this.formBuilder.group({
+        name: ['', Validators.required],
+        surname: ['', Validators.required],
+        birthDate: ['', Validators.required],
+        deathDate: ['', Validators.required],
+        sex: ['', Validators.required],
+        tombId: ['', Validators.required],
+        pictures: ['', Validators.required],
+      });
+    }
+
+    const tombId = this.person.tombId === 0 ? '' : this.person.tombId.toString();
+    const pictures = this.person.pictures.length === 0 ? '' : this.person.pictures.join(',');
+    const name = this.person === undefined ? '' : this.person.name
     return this.formBuilder.group({
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
-      birthDate: ['', Validators.required],
-      deathDate: ['', Validators.required],
-      sex: ['', Validators.required],
-      tombId: ['', Validators.required],
-      pictures: ['', Validators.required],
+      name: [this.person.name, Validators.required],
+      surname: [this.person.surname, Validators.required],
+      birthDate: [this.person.birthDate, Validators.required],
+      deathDate: [this.person.deathDate, Validators.required],
+      sex: [this.person.sex, Validators.required],
+      tombId: [tombId, Validators.required],
+      pictures: [pictures, Validators.required],
     });
   }
 
@@ -40,7 +63,11 @@ export class EditSingleRecordComponent implements OnInit {
     newPerson.tombId = Number(newPerson.tombId);
     newPerson.pictures = newPerson.pictures.toString() === '' ? [] : newPerson.pictures.toString().split(',');
     this.dataApiService.updateDbDate().subscribe(d => console.log('datadb: ', d));
-    this.dataApiService.addNewPerson(newPerson).subscribe(d => console.log('newPerson: ', d));
+    if (this.personId) {
+      this.dataApiService.editPerson(newPerson, this.personId).subscribe(d => console.log('editPerson: ', d));
+    } else {
+      this.dataApiService.addNewPerson(newPerson).subscribe(d => console.log('newPerson: ', d));
+    }
   }
 
   protected cancelEditData(): void {
