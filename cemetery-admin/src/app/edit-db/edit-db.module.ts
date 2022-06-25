@@ -6,6 +6,7 @@ import { EditDbComponent } from './edit-db.component';
 import { EditSingleRecordComponent } from './edit-single-record/edit-single-record.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PeopleListComponent } from './people-list/people-list.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { PeopleListComponent } from './people-list/people-list.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    EditDbRoutingModule
+    EditDbRoutingModule,
+    MatDialogModule
   ]
 })
 export class EditDbModule { }

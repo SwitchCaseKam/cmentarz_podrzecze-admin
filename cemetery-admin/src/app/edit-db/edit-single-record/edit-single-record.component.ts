@@ -46,7 +46,6 @@ export class EditSingleRecordComponent implements OnInit {
 
     const tombId = this.person.tombId === 0 ? '' : this.person.tombId.toString();
     const pictures = this.person.pictures.length === 0 ? '' : this.person.pictures.join(',');
-    const name = this.person === undefined ? '' : this.person.name
     return this.formBuilder.group({
       name: [this.person.name, Validators.required],
       surname: [this.person.surname, Validators.required],
@@ -71,7 +70,11 @@ export class EditSingleRecordComponent implements OnInit {
   }
 
   protected cancelEditData(): void {
-    this.router.navigate(['edit-db'])
+    if (this.person) {
+      this.router.navigate(['edit-db', 'edit']);
+      return;
+    }
+    this.router.navigate(['edit-db']);
   }
 
 }

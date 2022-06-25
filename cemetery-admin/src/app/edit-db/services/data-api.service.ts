@@ -27,17 +27,21 @@ export class DataApiService {
     return this.http.get<DatabaseDate>(`${this.apiUrl}/${tombServerEndpoints.DATE}`);
   }
 
-  public addNewPerson(newPersonData: Person) {
+  public addNewPerson(newPersonData: Person): Observable<Person>{
     return this.http.post<Person>(`${this.apiUrl}/${tombServerEndpoints.PEOPLE}`, newPersonData);
   }
 
-  public editPerson(newPersonData: Person, personId: number) {
+  public editPerson(newPersonData: Person, personId: number): Observable<Person> {
     return this.http.put<Person>(`${this.apiUrl}/${tombServerEndpoints.PEOPLE}/${personId}`, newPersonData);
   }
 
-  public updateDbDate() {
+  public updateDbDate(): Observable<DatabaseDate> {
     const date = new Date();
     const fullTodayDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;  
     return this.http.put<DatabaseDate>(`${this.apiUrl}/${tombServerEndpoints.DATE}`, {modifiedDate: fullTodayDate});
+  }
+
+  public deletePerson(personId: number) {
+    return this.http.delete<Person>(`${this.apiUrl}/${tombServerEndpoints.PEOPLE}/${personId}`);
   }
 }
