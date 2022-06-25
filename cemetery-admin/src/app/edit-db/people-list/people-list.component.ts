@@ -19,12 +19,17 @@ export class PeopleListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.dataService.getDataFromServer();
-    this.dataService.getAllPeople().subscribe(
-      (people: Person[]) => this.allPeople = people
+    this.dataService.getAllPeople().pipe().subscribe(
+      (people: Person[]) => 
+        this.allPeople = people.sort((a, b) => a.surname.localeCompare(b.surname, 'pl', { ignorePunctuation: true }))
     );
   }
 
-  public onRowClick(person: Person): void {
+  public editCurrentPerson(person: Person): void {
+    this.router.navigate(['edit-db/edit', person.id], {state: person});
+  }
+
+  public deleteCurrentPerson(person: Person): void {
     this.router.navigate(['edit-db/edit', person.id], {state: person});
   }
 

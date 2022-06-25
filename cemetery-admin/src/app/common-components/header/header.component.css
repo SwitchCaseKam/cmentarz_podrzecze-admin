@@ -1,0 +1,18 @@
+nav {
+    background-color: rgb(32, 29, 32);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    color: white;
+    margin: 0;
+}
+
+.title {
+    padding: 0.5em 0em 0.5em 0.5em;
+}
+
+.subtitle {
+    padding: 0em 0.5em 0.5em 0.5em;
+    font-weight: 100;
+}

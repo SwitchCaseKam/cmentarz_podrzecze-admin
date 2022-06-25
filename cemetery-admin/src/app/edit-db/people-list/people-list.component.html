@@ -1,22 +1,25 @@
-<p routerLink="/edit-db">anuluj</p>
-<div id="people-table-list">
-    <table class="table table-hover">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Nr</th>
-          <th scope="col">Nazwisko i imię</th>
-          <th scope="col">Data urodzenia</th>
-          <th scope="col">Data śmierci</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let person of allPeople; let i = index" (click)="onRowClick(person)">
-          <td scope="row">{{ i + 1 }}</td>
-          <td><b>{{ person.name }} {{ person.surname }}</b></td>
-          <td>{{ person.birthDate }}</td>
-          <td>{{ person.deathDate }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+<div class="people-list-flex-container">
+  <p routerLink="/edit-db">Anuluj</p>
+  <div id="people-table-list">
+      <table class="table table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Nr</th>
+            <th scope="col">Nazwisko i imię</th>
+            <th scope="col">Data urodzenia</th>
+            <th scope="col">Data śmierci</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let person of allPeople; let i = index">
+            <td scope="row">{{ i + 1 }}</td>
+            <td><b>{{ person.name }} {{ person.surname }}</b></td>
+            <td>{{ person.birthDate }}</td>
+            <td>{{ person.deathDate }}</td>
+            <td><button class="edit" (click)="editCurrentPerson(person)">Edytuj</button></td>
+            <td><button class="delete" (click)="deleteCurrentPerson(person)">Usuń</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
