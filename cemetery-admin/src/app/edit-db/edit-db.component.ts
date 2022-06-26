@@ -11,11 +11,9 @@ export class EditDbComponent implements OnInit, OnDestroy {
   constructor() { }
 
   public ngOnInit(): void {
-
   }
 
   public ngOnDestroy(): void {
-    console.log('edit-db onDestroy')
   }
 
 }

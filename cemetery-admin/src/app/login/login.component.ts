@@ -38,8 +38,8 @@ export class LoginComponent implements OnInit {
   }
 
   protected logIn(): void {
-    if (this.loginFormFields.get('username')?.value === 'admin' 
-      && this.loginFormFields.get('password')?.value === 'admin' 
+    if (btoa(this.loginFormFields.get('username')?.value) === 'Y21lbnRhcnpwb2RyemVjemVhZG1pbg==' 
+      && btoa(this.loginFormFields.get('password')?.value) === 'cG9kcnplY3plMjAxOQ==' 
     ) {
       this.errorMessage = '';
       this.authLoginService.setLoggedInFlag();

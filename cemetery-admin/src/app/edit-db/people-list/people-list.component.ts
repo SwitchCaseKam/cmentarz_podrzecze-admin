@@ -28,9 +28,12 @@ export class PeopleListComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.dataService.getDataFromServer();
+    this.refreshPeopleData();
+  }
+
+  private refreshPeopleData() {
     this.dataSubscription = this.dataService.getAllPeople().pipe().subscribe(
-      (people: Person[]) => 
-        this.allPeople = people.sort((a, b) => a.surname.localeCompare(b.surname, 'pl', { ignorePunctuation: true }))
+      (people: Person[]) => this.allPeople = people.sort((a, b) => a.surname.localeCompare(b.surname, 'pl', { ignorePunctuation: true }))
     );
   }
 
@@ -47,13 +50,10 @@ export class PeopleListComponent implements OnInit, OnDestroy {
       d => this.errorMessage = '',
       error => { 
         this.errorMessage = `Wystąpił błąd. Spróbuj ponownie za chwilę. ${error?.status}, ${error?.message}`;
-        this.scroller.scrollToAnchor("top");
+        this.scroller.scrollToAnchor("header");
       }
     );
-    this.dataSubscription = this.dataService.getAllPeople().pipe().subscribe(
-      (people: Person[]) => 
-        this.allPeople = people.sort((a, b) => a.surname.localeCompare(b.surname, 'pl', { ignorePunctuation: true }))
-    );
+    this.refreshPeopleData();
   }
 
 }
