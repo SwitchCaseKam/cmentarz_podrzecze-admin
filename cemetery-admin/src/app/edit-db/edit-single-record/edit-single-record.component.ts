@@ -13,7 +13,8 @@ export class EditSingleRecordComponent implements OnInit {
 
   protected personFormFields: FormGroup = new FormGroup({});
   private personId: number = 0;
-  private person: Person = {id: 0, name: '', surname: '', birthDate: '', deathDate: '', sex: '', tombId: 0, pictures: []}
+  private person: Person = {id: 0, name: '', surname: '', birthDate: '', deathDate: '', sex: '', tombId: 0, pictures: []};
+  protected requestStatusMessage: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -63,9 +64,21 @@ export class EditSingleRecordComponent implements OnInit {
     newPerson.pictures = newPerson.pictures.toString() === '' ? [] : newPerson.pictures.toString().split(',');
     this.dataApiService.updateDbDate().subscribe(d => console.log('datadb: ', d));
     if (this.personId) {
-      this.dataApiService.editPerson(newPerson, this.personId).subscribe(d => console.log('editPerson: ', d));
+      this.dataApiService.editPerson(newPerson, this.personId).subscribe(
+        d => {
+          this.requestStatusMessage = 'Dane zostały zaktualizowane';
+          setTimeout(() => this.router.navigate(['edit-db', 'edit']), 1500);
+        },
+        error => this.requestStatusMessage = `Wystąpił błąd. Spróbuj ponownie za chwilę. ${error}`);
     } else {
-      this.dataApiService.addNewPerson(newPerson).subscribe(d => console.log('newPerson: ', d));
+      this.dataApiService.addNewPerson(newPerson).subscribe(
+        d => {
+          this.requestStatusMessage = 'Nowe dane zostały dodane poprawnie';
+          setTimeout(() => this.router.navigate(['edit-db']), 1500);
+        
+        },
+        error => this.requestStatusMessage = `Wystąpił błąd. Spróbuj ponownie za chwilę. ${error?.status}, ${error?.message}`
+      );
     }
   }
 

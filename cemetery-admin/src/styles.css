@@ -5,3 +5,9 @@ html, body {
     min-height: 100%;
     font-family: Oxygen, sans-serif !important;
 }
+
+.errorMessage {
+    font-size: 1em;
+    font-weight: bold;
+    color: red;
+}

@@ -16,4 +16,5 @@
         <button (click)="submitData()">OK</button>
         <button (click)="cancelEditData()">Anuluj</button>
     </div>
+    <p *ngIf="requestStatusMessage !== ''" class="requestStatusMessage">{{requestStatusMessage}}</p>
 </div>
