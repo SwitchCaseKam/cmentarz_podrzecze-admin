@@ -37,8 +37,9 @@ export class DataApiService {
 
   public updateDbDate(): Observable<DatabaseDate> {
     const date = new Date();
-    const fullTodayDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;  
-    return this.http.put<DatabaseDate>(`${this.apiUrl}/${tombServerEndpoints.DATE}`, {modifiedDate: fullTodayDate});
+    const extra = date.getMonth() < 9 ? '0' : '';
+    const fullTodayDate = `${date.getDate()}.${extra}${date.getMonth() + 1}.${date.getFullYear()}`;  
+    return this.http.put<DatabaseDate>(`${this.apiUrl}/${tombServerEndpoints.DATE}/0`, {modifiedDate: fullTodayDate});
   }
 
   public deletePerson(personId: number) {

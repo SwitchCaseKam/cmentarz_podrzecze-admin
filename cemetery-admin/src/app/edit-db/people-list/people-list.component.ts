@@ -4,7 +4,7 @@ import { Person } from '../models/person.model';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DataApiService } from '../services/data-api.service';
-import { Subscription, take } from 'rxjs';
+import { Subscription, take, tap, switchMap } from 'rxjs';
 import { ViewportScroller } from "@angular/common";
 
 @Component({
@@ -27,13 +27,14 @@ export class PeopleListComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.dataService.getDataFromServer();
     this.refreshPeopleData();
   }
 
   private refreshPeopleData() {
+    this.dataService.getDataFromServer();
     this.dataSubscription = this.dataService.getAllPeople().pipe().subscribe(
-      (people: Person[]) => this.allPeople = people.sort((a, b) => a.surname.localeCompare(b.surname, 'pl', { ignorePunctuation: true }))
+      (people: Person[]) => 
+        this.allPeople = people.sort((a, b) => a.surname.localeCompare(b.surname, 'pl', { ignorePunctuation: true }))
     );
   }
 
@@ -46,14 +47,23 @@ export class PeopleListComponent implements OnInit, OnDestroy {
   }
 
   public deleteCurrentPerson(person: Person): void {
-    this.dataApisService.deletePerson(person.id).pipe(take(1)).subscribe(
-      d => this.errorMessage = '',
+    this.dataApisService.deletePerson(person.id).pipe(
+      tap( d => {
+        console.log('d: ', d);
+        this.errorMessage = '';
+      },
       error => { 
         this.errorMessage = `Wystąpił błąd. Spróbuj ponownie za chwilę. ${error?.status}, ${error?.message}`;
         this.scroller.scrollToAnchor("header");
+      }),
+      take(1),
+      switchMap(() => this.dataApisService.getAllPeople())
+    ).subscribe(
+      (people: Person[]) => {
+        console.log('refresh data: ', people);
+        this.allPeople = people.sort((a, b) => a.surname.localeCompare(b.surname, 'pl', { ignorePunctuation: true }));
       }
     );
-    this.refreshPeopleData();
   }
 
 }
